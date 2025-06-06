@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
 import 'pages/home_page.dart';
 import 'pages/user_page.dart';
 import 'auth/auth_gate.dart';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart'; // gegenereerd door flutterfire configure
