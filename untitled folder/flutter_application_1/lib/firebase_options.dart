@@ -44,7 +44,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCtLMaWhrlpdtiD_1ZcrfWq_VC8APklKs8',
+    apiKey: String.fromEnvironment('FIREBASE_WEB_API_KEY'),
     appId: '1:976788969184:web:7014c3c3d9c417bf9e2285',
     messagingSenderId: '976788969184',
     projectId: 'stravamoto-42daa',
@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDsihzFgOydf8D72WYv8SqEHCGbzy_7GLI',
+    apiKey: String.fromEnvironment('FIREBASE_ANDROID_API_KEY'),
     appId: '1:976788969184:android:12b1a10a1e1b44a29e2285',
     messagingSenderId: '976788969184',
     projectId: 'stravamoto-42daa',
@@ -62,7 +62,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDS4JYKH5Jyt7GC9ri8knteUqK37Jvm53k',
+    apiKey: String.fromEnvironment('FIREBASE_IOS_API_KEY'),
     appId: '1:976788969184:ios:05ce1f82c43d1c579e2285',
     messagingSenderId: '976788969184',
     projectId: 'stravamoto-42daa',
@@ -71,7 +71,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDS4JYKH5Jyt7GC9ri8knteUqK37Jvm53k',
+    apiKey: String.fromEnvironment('FIREBASE_MACOS_API_KEY'),
     appId: '1:976788969184:ios:05ce1f82c43d1c579e2285',
     messagingSenderId: '976788969184',
     projectId: 'stravamoto-42daa',
