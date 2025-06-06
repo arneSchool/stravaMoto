@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "976788969184",
+    "project_id": "stravamoto-42daa",
+    "storage_bucket": "stravamoto-42daa.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976788969184:android:12b1a10a1e1b44a29e2285",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsihzFgOydf8D72WYv8SqEHCGbzy_7GLI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
