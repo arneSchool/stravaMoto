@@ -1,0 +1,8 @@
+# Ignore environment variable files
+.env
+
+# Firebase configuration (generated)
+untitled folder/flutter_application_1/lib/firebase_options.dart
+untitled folder/flutter_application_1/android/app/google-services.json
+untitled folder/flutter_application_1/ios/Runner/GoogleService-Info.plist
+untitled folder/flutter_application_1/macos/Runner/GoogleService-Info.plist
