@@ -34,6 +34,51 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+
+  @override
+Widget build(BuildContext context) {
+  if (_currentPosition == null) {
+    return Center(child: CircularProgressIndicator());
+  }
+
+  return Scaffold(
+    body: Column(
+      children: [
+        Expanded(
+          flex: 3,
+          child: FlutterMap(
+            options: MapOptions(
+              center: _currentPosition,
+              zoom: 15.0,
+            ),
+            children: [
+              TileLayer(
+                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                userAgentPackageName: 'com.example.flutter_application_1',
+              ),
+              MarkerLayer(
+                markers: [
+                  Marker(
+                    point: _currentPosition!,
+                    width: 40,
+                    height: 40,
+                    child: Icon(Icons.my_location, color: Colors.blue, size: 40),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: RoutesOverviewPage(), // grid of lijst onderaan
+        ),
+      ],
+    ),
+  );
+}
+
+
   // @override
   // Widget build(BuildContext context) {
   //   return _currentPosition == null
@@ -63,10 +108,10 @@ class _HomePageState extends State<HomePage> {
   // }
 
 
-  @override
-  Widget build(BuildContext context) {
-    return RoutesOverviewPage(); // gewoon direct jouw grid tonen!
-  }
+  // @override
+  // Widget build(BuildContext context) {
+  //   return RoutesOverviewPage(); // gewoon direct jouw grid tonen!
+  // }
 
 
 }

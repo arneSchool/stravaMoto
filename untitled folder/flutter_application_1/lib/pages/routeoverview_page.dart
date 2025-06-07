@@ -12,11 +12,26 @@ class RoutesOverviewPage extends StatelessWidget {
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('routes').snapshots(),
         builder: (context, snapshot) {
+          print("Routes snapshot state: ${snapshot.connectionState}");
+
+          if (snapshot.hasError) {
+            print("Firestore fout: ${snapshot.error}");
+            return Center(child: Text("Fout bij laden van routes."));
+          }
+
           if (!snapshot.hasData) {
+            print("Snapshot heeft nog geen data.");
             return Center(child: CircularProgressIndicator());
           }
 
           final routes = snapshot.data!.docs;
+          print("Aantal routes gevonden: ${routes.length}");
+
+          if (routes.isEmpty) {
+            return Center(
+              child: Text("Nog geen routes toegevoegd.", style: TextStyle(fontSize: 18)),
+            );
+          }
 
           return GridView.builder(
             padding: EdgeInsets.all(8),
@@ -115,9 +130,8 @@ class RoutesOverviewPage extends StatelessWidget {
   }
 
   LatLng getCenter(List points) {
-    if (points.isEmpty) {
-      return LatLng(51.05, 3.72);
-    }
+    if (points.isEmpty) return LatLng(51.05, 3.72); // fallback naar Gent
+
     double avgLat = 0;
     double avgLng = 0;
     for (var p in points) {

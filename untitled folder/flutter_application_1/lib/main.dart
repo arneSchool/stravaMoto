@@ -1,3 +1,5 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'pages/home_page.dart';
 import 'pages/user_page.dart';
 import 'auth/auth_gate.dart';
@@ -7,6 +9,7 @@ import 'firebase_options.dart'; // gegenereerd door flutterfire configure
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -37,6 +40,7 @@ class _MainScreenState extends State<MainScreen> {
     HomePage(),
     UserPage(),
   ];
+
 
   void _onItemTapped(int index) {
     setState(() => _selectedIndex = index);

@@ -23,13 +23,20 @@ class _UserPageState extends State<UserPage> {
   }
 
   Future<void> _haalGebruikerInfoOp() async {
-    final uid = FirebaseAuth.instance.currentUser?.uid ?? 'testuser';
+    // final uid = FirebaseAuth.instance.currentUser?.uid ?? 'testuser';
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+    final uid = user.uid;
     final doc = await FirebaseFirestore.instance
         .collection('users')
         .doc(uid)
         .get();
 
+
+    
+
     if (doc.exists) {
+      print("in doc.exists");
       final data = doc.data()!;
       setState(() {
         leeftijd = data['leeftijd'] ?? -1;
@@ -38,6 +45,11 @@ class _UserPageState extends State<UserPage> {
         autoJaar = data['auto_jaar'];
         motoMerk = data['moto_merk'];
         motoJaar = data['moto_jaar'];
+      });
+    }else{
+      print("doc voor gebruiker $uid bestaat niet in users");
+      setState(() {
+        leeftijd = -1;
       });
     }
   }
