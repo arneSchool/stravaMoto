@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:latlong2/latlong.dart';
 
 class NewRoutePage extends StatefulWidget {
@@ -58,6 +59,10 @@ class _NewRoutePageState extends State<NewRoutePage> {
     if (widget.existingRoute != null) {
       await widget.existingRoute!.reference.update(routeData);
     } else {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        routeData['user_id'] = user.uid;
+      }
       await FirebaseFirestore.instance.collection('routes').add(routeData);
     }
 
