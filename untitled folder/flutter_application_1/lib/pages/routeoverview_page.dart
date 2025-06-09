@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/pages/new_route_page.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -10,7 +11,12 @@ class RoutesOverviewPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Mijn Routes')),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('routes').snapshots(),
+        stream: FirebaseAuth.instance.currentUser == null
+            ? const Stream.empty()
+            : FirebaseFirestore.instance
+                .collection('routes')
+                .where('user_id', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                .snapshots(),
         builder: (context, snapshot) {
           print("Routes snapshot state: ${snapshot.connectionState}");
 
