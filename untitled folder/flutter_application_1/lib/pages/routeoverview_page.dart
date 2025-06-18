@@ -50,36 +50,39 @@ class RoutesOverviewPage extends StatelessWidget {
             itemCount: routes.length,
             itemBuilder: (context, index) {
               final route = routes[index];
+              final data = route.data() as Map<String, dynamic>;
               return Card(
                 child: Stack(
                   children: [
                     Column(
                       children: [
                         Expanded(
-                          child: FlutterMap(
-                            options: MapOptions(
-                              center: getCenter(route['points']),
-                              zoom: 13,
-                              interactiveFlags: InteractiveFlag.none,
-                            ),
-                            children: [
-                              TileLayer(
-                                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                                userAgentPackageName: 'com.example.app',
+                          child: AbsorbPointer(
+                            child: FlutterMap(
+                              options: MapOptions(
+                                center: getCenter(data['points']),
+                                zoom: 13,
+                                interactiveFlags: InteractiveFlag.none,
                               ),
-                              if (route['points'] != null)
-                                PolylineLayer(
-                                  polylines: [
-                                    Polyline(
-                                      points: (route['points'] as List)
-                                          .map((p) => LatLng(p['lat'], p['lng']))
-                                          .toList(),
-                                      strokeWidth: 4,
-                                      color: Colors.blue,
-                                    ),
-                                  ],
+                              children: [
+                                TileLayer(
+                                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                  userAgentPackageName: 'com.example.app',
                                 ),
-                            ],
+                                if (data['points'] != null)
+                                  PolylineLayer(
+                                    polylines: [
+                                      Polyline(
+                                        points: (data['points'] as List)
+                                            .map((p) => LatLng(p['lat'], p['lng']))
+                                            .toList(),
+                                        strokeWidth: 4,
+                                        color: Colors.blue,
+                                      ),
+                                    ],
+                                  ),
+                              ],
+                            ),
                           ),
                         ),
                         Padding(
@@ -88,7 +91,7 @@ class RoutesOverviewPage extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: Text(
-                                  route['name'] ?? 'Geen naam',
+                                  data['name'] ?? 'Geen naam',
                                   style: const TextStyle(fontWeight: FontWeight.bold),
                                   overflow: TextOverflow.ellipsis,
                                 ),
