@@ -40,8 +40,8 @@ class RoutesOverviewPage extends StatelessWidget {
           }
 
           return GridView.builder(
-            padding: EdgeInsets.all(8),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            padding: const EdgeInsets.all(8),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
@@ -50,24 +50,17 @@ class RoutesOverviewPage extends StatelessWidget {
             itemCount: routes.length,
             itemBuilder: (context, index) {
               final route = routes[index];
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NewRoutePage(existingRoute: route),
-                    ),
-                  );
-                },
-                child: Card(
-                  child: Stack(
-                    children: [
-                      Column(
-                        children: [
-                          Expanded(
+              final data = route.data() as Map<String, dynamic>;
+              return Card(
+                child: Stack(
+                  children: [
+                    Column(
+                      children: [
+                        Expanded(
+                          child: AbsorbPointer(
                             child: FlutterMap(
                               options: MapOptions(
-                                center: getCenter(route['points']),
+                                center: getCenter(data['points']),
                                 zoom: 13,
                                 interactiveFlags: InteractiveFlag.none,
                               ),
@@ -76,11 +69,11 @@ class RoutesOverviewPage extends StatelessWidget {
                                   urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                                   userAgentPackageName: 'com.example.app',
                                 ),
-                                if (route['points'] != null)
+                                if (data['points'] != null)
                                   PolylineLayer(
                                     polylines: [
                                       Polyline(
-                                        points: (route['points'] as List)
+                                        points: (data['points'] as List)
                                             .map((p) => LatLng(p['lat'], p['lng']))
                                             .toList(),
                                         strokeWidth: 4,
@@ -91,32 +84,50 @@ class RoutesOverviewPage extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.all(8),
-                            child: Text(
-                              route['name'] ?? 'Geen naam',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Positioned(
-                        top: 8,
-                        right: 8,
-                        child: GestureDetector(
-                          onTap: () => _confirmDelete(context, route),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.8),
-                              shape: BoxShape.circle,
-                            ),
-                            padding: EdgeInsets.all(6),
-                            child: Icon(Icons.delete, color: Colors.red),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  data['name'] ?? 'Geen naam',
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.edit),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => NewRoutePage(existingRoute: route),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
                           ),
                         ),
+                      ],
+                    ),
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: GestureDetector(
+                        onTap: () => _confirmDelete(context, route),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.8),
+                            shape: BoxShape.circle,
+                          ),
+                          padding: const EdgeInsets.all(6),
+                          child: const Icon(Icons.delete, color: Colors.red),
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               );
             },
